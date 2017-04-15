@@ -113,7 +113,7 @@ AppRegistry.registerComponent('ReactNative1', () => ReactNative1);
 
 然后在 `App` 内创建一个 `setup.js`，这时候目录看起来是这样子:
 
-![目录](https://github.com/qiangxinyu/ReactNative1/blob/master/directory.jpeg?raw=true)
+![目录](https://github.com/qiangxinyu/ReactNativeExample/blob/master/ReactNative1/directory.jpeg?raw=true)
 
 然后在把 `index.ios.js` 的 `import` 、 `React` 和 `布局` 部分的内容复制过来，然后加入两句代码，现在 `setup.js` 文件是这样的：
 
@@ -197,17 +197,17 @@ AppRegistry.registerComponent('ReactNative1', setup);
 
 如果运行的时候遇见这个错误：
 
-![firstError](https://github.com/qiangxinyu/ReactNative1/blob/master/firstError.png?raw=true)
+![firstError](https://github.com/qiangxinyu/ReactNativeExample/blob/master/ReactNative1/firstError.png?raw=true)
 
 那么需要关闭 `react-native` 启动的服务，重新启动。
 
-![iterm](https://github.com/qiangxinyu/ReactNative1/blob/master/iterm.jpeg?raw=true)
+![iterm](https://github.com/qiangxinyu/ReactNativeExample/blob/master/ReactNative1/iterm.jpeg?raw=true)
 
 
 如果一切正常，那么尝试修改 `setup.js` 中 `Text` 标签中的文字，刷新 `iOS` 和 `Android` 看看效果。
 
 
-<img src="https://github.com/qiangxinyu/ReactNative1/blob/master/ios.png?raw=true" width=300/><img src="https://github.com/qiangxinyu/ReactNative1/blob/master/android.png?raw=true" width=300/>
+<img src="https://github.com/qiangxinyu/ReactNativeExample/blob/master/ReactNative1/ios.png?raw=true" width=300/><img src="https://github.com/qiangxinyu/ReactNativeExample/blob/master/ReactNative1/android.png?raw=true" width=300/>
 
 如果你坚持到了这里，那么恭喜你已经初步掌握了 `react native` 。
 
