@@ -211,7 +211,7 @@ AppRegistry.registerComponent('ReactNative1', setup);
 
 如果你坚持到了这里，那么恭喜你已经初步掌握了 `react native` 。
 
-[示例项目地址](https://github.com/qiangxinyu/ReactNative1)
+[示例项目地址](https://github.com/qiangxinyu/ReactNativeExample/tree/master/ReactNative1)
 
 ## 参考链接
 
