@@ -5,12 +5,16 @@ import {
     StyleSheet
 } from 'react-native'
 
+import NavigationBar from '../Custom/NavBarCommon'
 
 export default class Setting extends React.Component {
     render() {
         return (
             <View style={styles.view}>
-
+                <NavigationBar
+                    title="设置"
+                    unLeftImage={true}
+                />
             </View>
         )
     }

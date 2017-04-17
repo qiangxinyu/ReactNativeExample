@@ -28,7 +28,7 @@ class Root extends React.Component {
         return (
             <View style={styles.container}>
                 <StatusBar
-                    barStyle={'default'}
+                    barStyle={'light-content'}
                     backgroundColor={'#000000'}
                 />
                 <Navigator

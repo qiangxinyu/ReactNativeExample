@@ -10,11 +10,17 @@ import {
     StyleSheet
 } from 'react-native'
 
+import NavigationBar from '../Custom/NavBarCommon'
+
 
 export default class Home extends React.Component {
     render() {
         return (
             <View style={styles.view}>
+                <NavigationBar
+                    title="首页"
+                    unLeftImage={true}
+                />
 
             </View>
         )
