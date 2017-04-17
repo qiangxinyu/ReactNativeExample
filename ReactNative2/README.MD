@@ -28,7 +28,7 @@ const styles = StyleSheet.create({
 
 
 
-`React Native` 的所有界面都是在一个主视图上，这里的这个 `<View>` 跟 `iOS` 中的 `Window` 是同样的，这点可能跟 `Android` 不太一样。
+`React Native` 的所有界面都是在一个主视图上，这里的这个 `<View>` 跟 `iOS` 中的 `Window` 是同样的，这里跟 `Android` 不太一样。
 
 当然运行在 `iOS` 和 `Android` 中还是以 `ViewController` 和 `Activity` 展示的。
 
