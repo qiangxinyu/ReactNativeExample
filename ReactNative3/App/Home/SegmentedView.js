@@ -19,7 +19,6 @@ const {width, height} = Dimensions.get('window')
 
 // 一 屏最大数量, 为了可以居中请设置为 奇数
 const maxItem = 7
-
 export default class SegmentedView extends React.Component {
 
     // 构造
@@ -42,6 +41,7 @@ export default class SegmentedView extends React.Component {
 
           this._getItems = this._getItems.bind(this)
       }
+
 
     _getItems() {
         const { list } = this.props
@@ -97,7 +97,7 @@ export default class SegmentedView extends React.Component {
             <View style={[styles.view, style]}>
                 <ScrollView
                     ref="ScrollView"
-                    style={{flex:1, backgroundColor: '#EEEEEE',flexDirection: 'row'}}
+                    style={styles.scrollView}
                     horizontal={true}
                     showsHorizontalScrollIndicator={false}
                 >
@@ -162,6 +162,12 @@ class Item extends React.Component {
 const styles = StyleSheet.create({
     view: {
         height: 50,
+        width: width,
         backgroundColor: 'white',
+    },
+
+    scrollView: {
+        flex:1,
+        backgroundColor: '#EEEEEE',
     }
 })
