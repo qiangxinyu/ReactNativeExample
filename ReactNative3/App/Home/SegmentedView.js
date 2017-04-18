@@ -19,6 +19,7 @@ const {width, height} = Dimensions.get('window')
 
 // 一 屏最大数量, 为了可以居中请设置为 奇数
 const maxItem = 7
+
 export default class SegmentedView extends React.Component {
 
     // 构造
@@ -35,7 +36,7 @@ export default class SegmentedView extends React.Component {
           if (props.style && props.style.height > 0) {
               this.state = {
                   ...this.state,
-                  itemHeight: props.style.height,
+                  itemHeight: props.style.height,  //如果在使用的地方设置了高度,那么保存起来方便使用
               };
           }
 
@@ -44,10 +45,12 @@ export default class SegmentedView extends React.Component {
 
 
     _getItems() {
-        const { list } = this.props
+        const { list } = this.props  //获取到 传入的数组
 
         if (!list || list.length == 0) return []
 
+
+        // 计算每个标签的宽度
         let itemWidth = width / list.length
 
         if (list.length > maxItem) {
@@ -71,13 +74,9 @@ export default class SegmentedView extends React.Component {
                         this.state.selectItem = this.refs[index]
 
                         if (list.length > maxItem) {
-
                             let meiosis = parseInt(maxItem / 2)
-
-                            this.refs.ScrollView.scrollTo({x: (index - meiosis < 0 ? 0 : index - meiosis > list.length - maxItem ? list.length - maxItem : index - meiosis) * itemWidth, y: 0, animated: true})
-
+                            this.refs.ScrollView.scrollTo({x: (index - meiosis < 0 ? 0 : index - meiosis > list.length - maxItem ? list.length - maxItem : index - meiosis ) * itemWidth, y: 0, animated: true})
                         }
-
                     }}
                 />
             )
@@ -123,15 +122,14 @@ class Item extends React.Component {
         };
 
           this.timer = setTimeout(
-              () => { props.onPress && props.isSelect && props.onPress() },
+              () =>
+                  props.isSelect && props.onPress && props.onPress()
+              ,
               100
           );
       }
-    componentWillUnmount() {
-        // 如果存在this.timer，则使用clearTimeout清空。
-        // 如果你使用多个timer，那么用多个变量，或者用个数组来保存引用，然后逐个clear
-        this.timer && clearTimeout(this.timer);
-    }
+
+
     _unSelect() {
         this.setState({
             isSelect: false
@@ -139,11 +137,11 @@ class Item extends React.Component {
     }
 
     render() {
-        const {itemWidth,itemHeight, index, dic,onPress} = this.props
+
+        const {itemHeight, itemWidth, dic, onPress} = this.props
 
         return (
             <TouchableOpacity
-                key={index}
                 style={{height: itemHeight, width: itemWidth, alignItems: 'center', justifyContent:'center',backgroundColor:'#EEEEEE'}}
                 onPress={() => {
                     onPress && onPress()
@@ -152,7 +150,9 @@ class Item extends React.Component {
                     })
                 }}
             >
-                <Text  style={{color: this.state.isSelect ? 'red' : 'black'}}>{dic.NameCN}</Text>
+                {/* justifyContent: 主轴居中, alignItems: 次轴居中 */}
+
+                <Text style={{color: this.state.isSelect ? 'red' : 'black'}}>{dic.NameCN}</Text>
             </TouchableOpacity>
         )
     }
