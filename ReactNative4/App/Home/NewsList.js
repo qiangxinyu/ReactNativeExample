@@ -13,13 +13,16 @@ import {
     Dimensions,
     RefreshControl,
     TouchableOpacity,
-    TouchableWithoutFeedback
+    TouchableWithoutFeedback,
+    ScrollView
 } from 'react-native'
 
 
 const {width, height} = Dimensions.get('window')
 
 var Swiper = require('react-native-swiper');
+
+import CarousePicture from './CarousePicture'
 
 
 export default class NewsList extends React.Component {
@@ -136,16 +139,14 @@ export default class NewsList extends React.Component {
 
         if (Object.prototype.toString.call(rowData) === '[object Array]') {
             return (
-                <Swiper
-                    removeClippedSubviews={false}
-                    height={200}
-                    paginationStyle={{bottom:25}}
-                    autoplay={false}
-                    dotColor='black'
-                    activeDotColor='white'
+                <CarousePicture
+                    index={5}
+                    ref="ScrollView"
+                    rowData={rowData}
+                    style={{width, height: 200}}
+                    touchIn={this.props.touchIn}
                 >
-                    {this._getSwiperItems(rowData)}
-                </Swiper>
+                </CarousePicture>
             )
         }
 

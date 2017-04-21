@@ -9,7 +9,8 @@ import {
     View,
     StyleSheet,
     ScrollView,
-    Dimensions
+    Dimensions,
+    Platform
 } from 'react-native'
 const {width, height} = Dimensions.get('window')
 
@@ -25,7 +26,8 @@ export default class Home extends React.Component {
         super(props);
         // 初始状态
         this.state = {
-            list: null
+            list: null,
+
         };
 
           this._getNewsLists = this._getNewsLists.bind(this)
@@ -83,6 +85,9 @@ export default class Home extends React.Component {
                         style={{backgroundColor:'white', width: width, height: height - 64 - 49 - 30}}
                         dic={dic}
                         isRequest={index == 0}
+                        touchIn={(scrollEnabled) => {
+                            this.refs.ScrollView.setNativeProps({scrollEnabled: !scrollEnabled})
+                        }}
                     />
                 )
             }
@@ -109,6 +114,7 @@ export default class Home extends React.Component {
                 />
 
                 <ScrollView
+                    removeClippedSubviews={Platform.OS === 'ios'}
                     style={styles.view}
                     ref="ScrollView"
                     horizontal={true}

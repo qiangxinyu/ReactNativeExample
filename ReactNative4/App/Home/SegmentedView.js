@@ -114,6 +114,7 @@ export default class SegmentedView extends React.Component {
                     style={styles.scrollView}
                     horizontal={true}
                     showsHorizontalScrollIndicator={false}
+                    
                 >
                     {
                         this._getItems()
