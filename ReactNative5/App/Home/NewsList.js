@@ -14,7 +14,8 @@ import {
     RefreshControl,
     TouchableOpacity,
     TouchableWithoutFeedback,
-    ScrollView
+    ScrollView,
+
 } from 'react-native'
 
 
@@ -43,9 +44,15 @@ export default class NewsList extends React.Component {
                 getRowData: getRowData,
                 rowHasChanged: (r1, r2) => r1 !== r2,
             }),
+            data: [],
+
+
+            isRefreshing: false,
         };
 
         this.renderRow = this.renderRow.bind(this)
+        this._toEnd = this._toEnd.bind(this)
+        this._renderFooter = this._renderFooter.bind(this)
 
     }
 
@@ -54,11 +61,33 @@ export default class NewsList extends React.Component {
         this._onRefresh()
     }
 
+    _begainRefresh() {
+        this.setState({
+            isRefreshing: true
+        })
+    }
+    _endRefresh() {
+        this.setState({
+            isRefreshing: false
+        })
+    }
+
+    
     _onRefresh(page) {
         if (this.props.dic) {
+
+
+            this._begainRefresh()
+
+            if (page == 1) {
+                this.setState({
+                    page
+                })
+            }
+
             let url = 'http://api.iapple123.com/newspush/list/index.html?clientid=1114283782&v=1.1&type='
                 + this.props.dic.NameEN
-                + '&startkey=&newkey=&index='
+                + '&startkey=3001_9223370543834829200_537d522d125e32ae&newkey=&index='
                 + (page ? page : this.state.page)
                 + '&size=20&ime=6271F554-7B2F-45DE-887E-4A336F64DEE6&apptypeid=ZJZYIOS1114283782&rn='
                 + this.state.rn
@@ -73,6 +102,8 @@ export default class NewsList extends React.Component {
             })
                 .then((res) => {
 
+                    this._endRefresh()
+
                     res.json()
                         .then((json) => {
 
@@ -83,11 +114,12 @@ export default class NewsList extends React.Component {
 
                             for (let index in list) {
                                 let dic = list[index]
-
-                                index < 4 ? swipers.push(dic) : news.push(dic)
+                                dic.HotNews == 1 ? swipers.push(dic) : news.push(dic)
                             }
 
                             news.splice(0, 0, swipers)
+
+
 
 
                             this.setState({
@@ -100,12 +132,24 @@ export default class NewsList extends React.Component {
                         })
                 })
                 .catch((error) => {
-
+                    this._endRefresh()
                     LOG('GET ERROR=>', url, '==>', error)
                 })
         }
     }
 
+
+    _toEnd() {
+        this._onRefresh()
+    }
+
+    _renderFooter() {
+        return (
+            <View style={{width, height: 40, backgroundColor: '#FFFFFF', alignItems:'center', justifyContent:'center'}}>
+                <Text>正在加载更多</Text>
+            </View>
+        )
+    }
 
     renderRow(rowData, rowID, highlightRow) {
         LOG('rowData ==>', rowID, Object.prototype.toString.call(rowData))
@@ -191,6 +235,23 @@ export default class NewsList extends React.Component {
                     style={{flex:1, backgroundColor:'white'}}
                     dataSource={this.state.dataSource} //设置数据源
                     renderRow={this.renderRow} //设置cell
+                    removeClippedSubviews={false}
+
+                    onEndReached={ this._toEnd }
+                    onEndReachedThreshold={10}
+                    renderFooter={ this._renderFooter }
+
+                    refreshControl={
+                          <RefreshControl
+                            refreshing={this.state.isRefreshing}
+                            onRefresh={() => this._onRefresh(1)}
+                            tintColor="#999999"
+                            title="加载中..."
+                            titleColor="#999999"
+                            colors={['#ff0000', '#00ff00', '#0000ff']}
+                            progressBackgroundColor="#ffff00"
+                          />
+                    }
                 />
             </View>
         )

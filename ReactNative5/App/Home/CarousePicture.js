@@ -104,23 +104,22 @@ export default class CarousePicture extends React.Component {
             let index = this.state.index
 
             if (this.props.loop && arr.length > 1) {
-
-                if (index <= 1 || index > arr.length - 1) {
-                    index = 1
-                }
-
                 let first = arr[0]
                 let last = arr[arr.length - 1]
 
                 arr.splice(0, 0, last)
                 arr.splice(arr.length, 0, first)
-                
+
+                if (this.state.index <= 1 || this.state.index > arr.length - 1) {
+                    index = 1
+                }
+
             }
 
-            if (index > (arr.length - 1)) {
-
+            if (index > arr.length - 1) {
                 index = 0
             }
+
             this.setState({
                 dataSource: this.state.dataSource.cloneWithRows(arr),
                 newArr: arr,
@@ -216,6 +215,9 @@ export default class CarousePicture extends React.Component {
         // 如果存在this.timer，则使用clearTimeout清空。
         // 如果你使用多个timer，那么用多个变量，或者用个数组来保存引用，然后逐个clear
         this._clearTimes()
+
+
+        LOG('componentWillUnmount --->')
     }
 
 
@@ -297,11 +299,10 @@ export default class CarousePicture extends React.Component {
 
     render() {
         return (
-            <View>
+            <View style={[{flex:1, backgroundColor: 'white'},this.props.style]}>
                 <ListView
-
                     ref="ListView"
-                    style={[{flex:1, backgroundColor: 'white'},this.props.style]}
+                    style={[{flex:1, backgroundColor: 'white'}]}
                     dataSource={this.state.dataSource} //设置数据源
                     renderRow={this.renderRow} //设置cell
                     horizontal={true}
