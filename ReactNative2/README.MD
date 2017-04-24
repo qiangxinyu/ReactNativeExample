@@ -1,3 +1,7 @@
+title: StatusBar 、 NavigationBar 与 TabBar
+---
+
+
 
 ## 1.React Native App 的视图结构
 
