@@ -106,33 +106,6 @@ export default class NewsList extends React.Component {
     }
 
 
-    _getSwiperItems(list) {
-
-        let arr = []
-
-        for (let index in list) {
-            let dic = list[index]
-            arr.push(
-                <TouchableWithoutFeedback
-                    key={index}
-                    style={{flex:1, backgroundColor:'white'}}
-                >
-                    <Image
-                        resizeMode="cover"
-                        style={{width, height:200, backgroundColor:'white', justifyContent:'flex-end'}}
-                        source={{uri:dic.LargeImagesList[0].ImgPath }}
-                    >
-                        <Text
-                            style={{fontSize: 12, color: 'white', alignSelf:'center', backgroundColor: 'rgba(0,0,0,0)', marginBottom: 5}}>{dic.Title}</Text>
-                    </Image>
-                </TouchableWithoutFeedback>
-            )
-        }
-
-        return arr
-    }
-
-
     renderRow(rowData, rowID, highlightRow) {
         LOG('rowData ==>', rowID, Object.prototype.toString.call(rowData))
 
