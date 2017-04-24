@@ -104,15 +104,18 @@ export default class CarousePicture extends React.Component {
             let index = this.state.index
 
             if (this.props.loop && arr.length > 1) {
+
+                if (this.state.index <= 1 || this.state.index > arr.length - 1) {
+                    index = 1
+                }
+
                 let first = arr[0]
                 let last = arr[arr.length - 1]
 
                 arr.splice(0, 0, last)
                 arr.splice(arr.length, 0, first)
 
-                if (this.state.index <= 1 || this.state.index > arr.length - 1) {
-                    index = 1
-                }
+
 
             }
 
@@ -287,7 +290,7 @@ export default class CarousePicture extends React.Component {
                 <Image
                     resizeMode="cover"
                     style={{flex:1,width, height:200, backgroundColor:'white', justifyContent:'flex-end'}}
-                    source={{uri:rowData.LargeImagesList[0].ImgPath }}
+                    source={{uri:rowData.ImagesList[0].ImgPath }}
                 >
                     <Text
                         style={{fontSize: 12, color: 'white', alignSelf:'center', backgroundColor: 'rgba(0,0,0,0)', marginBottom: 5}}>{rowData.Title}</Text>

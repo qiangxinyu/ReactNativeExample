@@ -24,6 +24,8 @@ const {width, height} = Dimensions.get('window')
 
 import CarousePicture from './CarousePicture'
 
+const maxCount = 20
+
 
 export default class NewsList extends React.Component {
 
@@ -39,7 +41,6 @@ export default class NewsList extends React.Component {
         this.state = {
 
             page: 1,
-            rn: 1,
             dataSource: new ListView.DataSource({
                 getRowData: getRowData,
                 rowHasChanged: (r1, r2) => r1 !== r2,
@@ -48,6 +49,10 @@ export default class NewsList extends React.Component {
 
 
             isRefreshing: false,
+
+            showFooter: false,
+
+            hasMore: true
         };
 
         this.renderRow = this.renderRow.bind(this)
@@ -72,10 +77,9 @@ export default class NewsList extends React.Component {
         })
     }
 
-    
+
     _onRefresh(page) {
         if (this.props.dic) {
-
 
             this._begainRefresh()
 
@@ -83,14 +87,17 @@ export default class NewsList extends React.Component {
                 this.setState({
                     page
                 })
+            } else  {
+                page = this.state.page
             }
 
             let url = 'http://api.iapple123.com/newspush/list/index.html?clientid=1114283782&v=1.1&type='
                 + this.props.dic.NameEN
                 + '&startkey=3001_9223370543834829200_537d522d125e32ae&newkey=&index='
-                + (page ? page : this.state.page)
-                + '&size=20&ime=6271F554-7B2F-45DE-887E-4A336F64DEE6&apptypeid=ZJZYIOS1114283782&rn='
-                + this.state.rn
+                + page
+                + '&size='
+                + maxCount
+                + '&ime=6271F554-7B2F-45DE-887E-4A336F64DEE6&apptypeid=ZJZYIOS1114283782'
 
             LOG('url=》', url)
             fetch(url, {
@@ -112,18 +119,26 @@ export default class NewsList extends React.Component {
                             let swipers = []
                             let news = []
 
-                            for (let index in list) {
-                                let dic = list[index]
-                                dic.HotNews == 1 ? swipers.push(dic) : news.push(dic)
+                            if (page == 1) {
+                                for (let index in list) {
+                                    let dic = list[index]
+                                    index < 4 ? swipers.push(dic) : news.push(dic)
+                                }
+                                news.splice(0, 0, swipers)
+                            } else {
+                                news = list
                             }
 
-                            news.splice(0, 0, swipers)
+                            let newData = this.state.data.concat(news)
 
-
-
+                            let hasMore = list.length == maxCount ? true : false
 
                             this.setState({
-                                dataSource: this.state.dataSource.cloneWithRows(news)
+                                dataSource: this.state.dataSource.cloneWithRows(newData),
+                                data: newData,
+                                page: this.state.page + (hasMore ? 1 : 0),
+                                showFooter: this.state.showFooter ? true : (hasMore ? true : false),
+                                hasMore,
                             })
                         })
                         .catch((e) => {
@@ -140,19 +155,23 @@ export default class NewsList extends React.Component {
 
 
     _toEnd() {
+        if (this.state.isRefreshing || this.state.hasMore) return
         this._onRefresh()
     }
 
     _renderFooter() {
+
+        if (!this.state.showFooter) {
+            return null
+        }
         return (
             <View style={{width, height: 40, backgroundColor: '#FFFFFF', alignItems:'center', justifyContent:'center'}}>
-                <Text>正在加载更多</Text>
+                <Text>{this.state.hasMore ? '正在加载更多...' : '已加载全部'}</Text>
             </View>
         )
     }
 
     renderRow(rowData, rowID, highlightRow) {
-        LOG('rowData ==>', rowID, Object.prototype.toString.call(rowData))
 
         if (Object.prototype.toString.call(rowData) === '[object Array]') {
             return (
