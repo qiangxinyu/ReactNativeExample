@@ -368,7 +368,7 @@ renderRow(rowData, rowID, highlightRow) {
 
 
 
-接下来开始解析数据，解析完 `json` 数据发现只有一个数组，`HotNews` 字段为 1 的表示轮播图，剩下的根据 `ImagesList` 里图片的个数来判断，
+接下来开始解析数据，解析完 `json` 数据发现只有一个数组，轮播图是取了前四个，剩下的根据 `ImagesList` 里图片的个数来判断，
 
 
 去 `.then((json) => {` 加入
@@ -381,7 +381,7 @@ let news = []
 
 for (let index in list) {
     let dic = list[index]
-    dic.HotNews == 1 ? swipers.push(dic) : news.push(dic)
+    index < 4 ? swipers.push(dic) : news.push(dic)
 }
 
 news.splice(0, 0, swipers)
