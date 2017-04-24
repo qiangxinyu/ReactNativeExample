@@ -57,7 +57,7 @@ export default class CarousePicture extends React.Component {
 
         loop: true,
         autoplay: true,
-        autoplayTimeout: 1000,
+        autoplayTimeout: 2500,
 
         index: 0,
     }

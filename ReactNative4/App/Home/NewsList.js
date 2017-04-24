@@ -20,7 +20,6 @@ import {
 
 const {width, height} = Dimensions.get('window')
 
-var Swiper = require('react-native-swiper');
 
 import CarousePicture from './CarousePicture'
 
@@ -215,7 +214,7 @@ export default class NewsList extends React.Component {
         return (
             <View style={[styles.view,style]}>
                 <ListView
-                    style={styles.listView}
+                    style={{flex:1, backgroundColor:'white'}}
                     dataSource={this.state.dataSource} //设置数据源
                     renderRow={this.renderRow} //设置cell
                 />
@@ -228,6 +227,6 @@ export default class NewsList extends React.Component {
 const styles = StyleSheet.create({
     view: {
         flex: 1,
-        backgroundColor: 'red'
+        backgroundColor: 'white'
     }
 })
