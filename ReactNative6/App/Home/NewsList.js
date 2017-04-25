@@ -91,7 +91,6 @@ export default class NewsList extends React.Component {
         })
         if (this.props.dic) {
 
-            this._begainRefresh()
 
             if (page == 1) {
                 this.setState({
@@ -100,6 +99,8 @@ export default class NewsList extends React.Component {
             } else  {
                 page = this.state.page
             }
+
+            page == 1 && this._begainRefresh()
 
             let url = 'http://api.iapple123.com/newspush/list/index.html?clientid=1114283782&v=1.1&type='
                 + this.props.dic.NameEN
@@ -121,7 +122,7 @@ export default class NewsList extends React.Component {
             })
                 .then((res) => {
 
-                    this._endRefresh()
+                    page == 1 && this._endRefresh()
 
                     res.json()
                         .then((json) => {
@@ -162,7 +163,7 @@ export default class NewsList extends React.Component {
                         })
                 })
                 .catch((error) => {
-                    this._endRefresh()
+                    page == 1 && this._endRefresh()
                     LOG('GET ERROR=>', url, '==>', error)
                 })
         }
