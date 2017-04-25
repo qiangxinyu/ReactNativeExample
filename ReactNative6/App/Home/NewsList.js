@@ -52,7 +52,12 @@ export default class NewsList extends React.Component {
 
             showFooter: false,
 
-            hasMore: true
+            hasMore: true,
+
+
+            isRequest: false,
+
+            startKey: ''
         };
 
         this.renderRow = this.renderRow.bind(this)
@@ -79,6 +84,9 @@ export default class NewsList extends React.Component {
 
 
     _onRefresh(page) {
+        this.setState({
+            isRequest: true
+        })
         if (this.props.dic) {
 
             this._begainRefresh()
@@ -93,7 +101,9 @@ export default class NewsList extends React.Component {
 
             let url = 'http://api.iapple123.com/newspush/list/index.html?clientid=1114283782&v=1.1&type='
                 + this.props.dic.NameEN
-                + '&startkey=3001_9223370543834829200_537d522d125e32ae&newkey=&index='
+                + '&startkey='
+                + this.state.startKey
+                +'&newkey=&index='
                 + page
                 + '&size='
                 + maxCount
@@ -115,6 +125,8 @@ export default class NewsList extends React.Component {
                         .then((json) => {
 
                             let list = json.NewsList
+
+
 
                             let swipers = []
                             let news = []
@@ -139,6 +151,7 @@ export default class NewsList extends React.Component {
                                 page: this.state.page + (hasMore ? 1 : 0),
                                 showFooter: this.state.showFooter ? true : (hasMore ? true : false),
                                 hasMore,
+                                startKey: json.EndKey ? json.EndKey : this.state.startKey
                             })
                         })
                         .catch((e) => {

@@ -235,7 +235,7 @@ _renderFooter() {
 
 ```javascript
 _toEnd() {
-    if (this.state.isRefreshing || this.state.hasMore) return
+    if (this.state.isRefreshing || !this.state.hasMore) return
     this._onRefresh()
 }
 ```
