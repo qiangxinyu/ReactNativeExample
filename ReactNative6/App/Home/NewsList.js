@@ -18,6 +18,7 @@ import {
 
 } from 'react-native'
 
+import NewsDetail from './NewsDetail'
 
 const {width, height} = Dimensions.get('window')
 
@@ -55,7 +56,7 @@ export default class NewsList extends React.Component {
             hasMore: true,
 
 
-            isRequest: false,
+            isFirstShow: true,
 
             startKey: ''
         };
@@ -63,6 +64,7 @@ export default class NewsList extends React.Component {
         this.renderRow = this.renderRow.bind(this)
         this._toEnd = this._toEnd.bind(this)
         this._renderFooter = this._renderFooter.bind(this)
+        this._onPress = this._onPress.bind(this)
 
     }
 
@@ -85,7 +87,7 @@ export default class NewsList extends React.Component {
 
     _onRefresh(page) {
         this.setState({
-            isRequest: true
+            isFirstShow: false
         })
         if (this.props.dic) {
 
@@ -184,6 +186,15 @@ export default class NewsList extends React.Component {
         )
     }
 
+    _onPress() {
+        this.props.navigator && this.props.navigator.push({
+            component: NewsDetail,
+            params: {
+                navigator: this.props.navigator,  //这个并不用传入, 这里只是为了演示参数的传入
+            }
+        })
+    }
+
     renderRow(rowData, rowID, highlightRow) {
 
         if (Object.prototype.toString.call(rowData) === '[object Array]') {
@@ -194,8 +205,8 @@ export default class NewsList extends React.Component {
                     rowData={rowData}
                     style={{width, height: 200}}
                     touchIn={this.props.touchIn}
-                >
-                </CarousePicture>
+                    onPress={this._onPress}
+                />
             )
         }
 
@@ -203,7 +214,7 @@ export default class NewsList extends React.Component {
 
         if (imagesList && imagesList.length == 1) {
             return (
-                <TouchableOpacity style={{width,  backgroundColor:'white'}}>
+                <TouchableOpacity style={{width,  backgroundColor:'white'}} onPress={this._onPress}>
                     <View
                         style={{width, backgroundColor:'white', flexDirection:'row', justifyContent:'space-between', flex:1}}>
                         <Image
@@ -242,7 +253,7 @@ export default class NewsList extends React.Component {
         }
 
         return (
-            <TouchableOpacity style={{width,  backgroundColor:'white'}}>
+            <TouchableOpacity style={{width,  backgroundColor:'white'}} onPress={this._onPress}>
 
                 <View style={{width,backgroundColor:'white'}}>
                     <Text style={{marginLeft: 10, marginTop: 10}}>{rowData.Title}</Text>

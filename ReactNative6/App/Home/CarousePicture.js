@@ -274,13 +274,11 @@ export default class CarousePicture extends React.Component {
             <TouchableWithoutFeedback
                 style={{flex:1,width, height:200, backgroundColor:'white'}}
 
-                onProgress={() => {
-                    LOG('onProgress')
+                onPress={() => {
+                    this.props.onPress && this.props.onPress()
                 }}
                 onPressIn={() => {
                     this.props.touchIn && this.props.touchIn(true)
-
-
                 }}
 
                 onPressOut={() => {

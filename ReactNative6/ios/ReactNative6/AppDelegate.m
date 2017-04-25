@@ -33,6 +33,5 @@
   [self.window makeKeyAndVisible];
   return YES;
 }
-http://api.iapple123.com/newspush/list/index.html?clientid=1114283782&v=1.1&type=tiyu&startkey=&newkey=&index=1&size=20&ime=6271F554-7B2F-45DE-887E-4A336F64DEE6&apptypeid=ZJZYIOS1114283782&rn=1
-http://api.iapple123.com/newspush/list/index.html?clientid=1114283782&v=1.1&type=tiyu&startkey=3001_9223370543834829200_537d522d125e32ae&newkey=&index=1&size=20&ime=6271F554-7B2F-45DE-887E-4A336F64DEE6&apptypeid=ZJZYIOS1114283782&rn=2
+
 @end

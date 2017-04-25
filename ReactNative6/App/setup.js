@@ -36,21 +36,21 @@ class Root extends React.Component {
 
                     style={{flex:1}}
                     renderScene={(route, navigator) => {
-                                    BackAndroid.addEventListener('hardwareBackPress', function() {
-                                        if(navigator == null){
-                                            return false;
-                                        }
-                                        if(navigator.getCurrentRoutes().length === 1){
-                                            return false;
-                                        }
-                                        navigator.pop();
-                                        return true;
-                                    });
+                        BackAndroid.addEventListener('hardwareBackPress', function() {
+                            if(navigator == null){
+                                return false;
+                            }
+                            if(navigator.getCurrentRoutes().length === 1){
+                                return false;
+                            }
+                            navigator.pop();
+                            return true;
+                        });
 
-                                    let Component = route.component;
-                                    return <Component {...route.params} navigator={navigator}/>
-                                    //  上面的route.params 是为了方便后续界面间传递参数用的
-                                }}
+                        let Component = route.component;
+                        return <Component {...route.params} navigator={navigator}/>
+                        //  上面的route.params 是为了方便后续界面间传递参数用的
+                    }}
                 />
             </View>
         );

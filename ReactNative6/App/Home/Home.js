@@ -60,6 +60,12 @@ export default class Home extends React.Component {
             .catch((error) => {
                 LOG('GET ERROR=>',url, '==>',error)
             })
+
+
+        let str = 'uDgFKk1WHYBjSoIklv04aUk3q2plrVmyPq2gvwCKufRjS6FuJKMiOL1R8l/EQ/JEkza4TjQ11ZSav0opTkso73RikuQg6i7b+uUUcXUI0GDnfCXT13B+npyQ9xELxNCL3HqIUjfK+YOFfijLsuUjELipV/Jo22hXWiCF1gC1Lv7ZVT3vgYOCcYpimIj2dY7v'
+
+
+
     }
 
     _getColor(color, index) {
@@ -89,6 +95,7 @@ export default class Home extends React.Component {
                         touchIn={(scrollEnabled) => {
                             this.refs.ScrollView.setNativeProps({scrollEnabled: !scrollEnabled})
                         }}
+                        navigator={this.props.navigator}
                     />
                 )
             }
@@ -100,7 +107,7 @@ export default class Home extends React.Component {
 
     _scrollTo(index) {
         let newsList = this.refs['NewsList' + index]
-        !newsList.state.isRequest && newsList._onRefresh()
+        newsList.state.isFirstShow && newsList._onRefresh()
     }
 
     render() {
